@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        NEXUS_URL = "http://34.224.80.43:8081/repository/deployment_app/"
+        NEXUS_URL = "http://34.229.87.27:8081/repository/deployment_app/"
     }
 
     stages {
