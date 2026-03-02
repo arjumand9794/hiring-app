@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        NEXUS_URL = "http://34.229.87.27:8081/repository/deployment_app/"
+        NEXUS_URL = "http://localhost:8081/repository/deployment_app/"
     }
 
     stages {
@@ -30,17 +30,20 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy to Nexus') {
-    steps {
-        withCredentials([usernamePassword(
-            credentialsId: 'nexus-creds',
-            usernameVariable: 'NEXUS_USER',
-            passwordVariable: 'NEXUS_PASS'
-        )]) {
-            sh """
-            mvn deploy -DskipTests \
-            -DaltDeploymentRepository=deployment_app::default::http://${NEXUS_USER}:${NEXUS_PASS}@localhost:8081/repository/deployment_app/
-            """
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'nexus-creds',
+                    usernameVariable: 'NEXUS_USER',
+                    passwordVariable: 'NEXUS_PASS'
+                )]) {
+                    sh """
+                    mvn deploy -DskipTests \
+                    -DaltDeploymentRepository=deployment_app::default::http://${NEXUS_USER}:${NEXUS_PASS}@localhost:8081/repository/deployment_app/
+                    """
+                }
+            }
         }
     }
 }
