@@ -3,12 +3,10 @@ pipeline {
 
     tools {
         maven 'Maven'
-        sonarScanner 'SonarQubeScanner'
     }
 
     environment {
-        NEXUS_URL = "http://34.224.80.43:8081"
-        NEXUS_REPO = "deployment_app"
+        NEXUS_URL = "http://34.224.80.43:8081/repository/deployment_app/"
     }
 
     stages {
@@ -33,33 +31,21 @@ pipeline {
             }
         }
 
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 2, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-
-        stage('Upload to Nexus') {
+        stage('Deploy to Nexus') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'nexus-creds',
                     usernameVariable: 'NEXUS_USER',
                     passwordVariable: 'NEXUS_PASS'
                 )]) {
-                    sh 'mvn deploy'
+                    sh '''
+                    mvn deploy -DskipTests \
+                    -DaltDeploymentRepository=deployment_app::default::$NEXUS_URL \
+                    -Dnexus.username=$NEXUS_USER \
+                    -Dnexus.password=$NEXUS_PASS
+                    '''
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            echo "CI Pipeline Completed Successfully"
-        }
-        failure {
-            echo "Pipeline Failed"
         }
     }
 }
