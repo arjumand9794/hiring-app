@@ -51,7 +51,7 @@
     <distributionManagement>
         <repository>
             <id>deployment_app</id>
-            <name>Nexus Releases</name>
+            <version>1.0.0-SNAPSHOT</version>
             <url>http://localhost:8081/repository/deployment_app/</url>
         </repository>
     </distributionManagement>
