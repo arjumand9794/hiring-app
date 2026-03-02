@@ -30,22 +30,17 @@ pipeline {
                 }
             }
         }
-
         stage('Deploy to Nexus') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'nexus-creds',
-                    usernameVariable: 'NEXUS_USER',
-                    passwordVariable: 'NEXUS_PASS'
-                )]) {
-                    sh '''
-                    mvn deploy -DskipTests \
-                    -DaltDeploymentRepository=deployment_app::default::$NEXUS_URL \
-                    -Dnexus.username=$NEXUS_USER \
-                    -Dnexus.password=$NEXUS_PASS
-                    '''
-                }
-            }
+    steps {
+        withCredentials([usernamePassword(
+            credentialsId: 'nexus-creds',
+            usernameVariable: 'NEXUS_USER',
+            passwordVariable: 'NEXUS_PASS'
+        )]) {
+            sh """
+            mvn deploy -DskipTests \
+            -DaltDeploymentRepository=deployment_app::default::http://${NEXUS_USER}:${NEXUS_PASS}@localhost:8081/repository/deployment_app/
+            """
         }
     }
 }
