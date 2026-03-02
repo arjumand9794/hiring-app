@@ -15,8 +15,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                url: 'https://github.com/YOUR_USERNAME/app-repo.git'
+                checkout scm
             }
         }
 
@@ -52,6 +51,15 @@ pipeline {
                     sh 'mvn deploy'
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo "CI Pipeline Completed Successfully"
+        }
+        failure {
+            echo "Pipeline Failed"
         }
     }
 }
