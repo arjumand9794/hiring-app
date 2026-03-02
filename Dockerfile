@@ -1,8 +1,8 @@
-FROM eclipse-temurin:17-jdk-jammy
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
-COPY target/hiring-app-1.0.0-SNAPSHOT.jar app.jar
+COPY target/hiring-app-1.0.0.jar app.jar
 
 EXPOSE 8080
 
