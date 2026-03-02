@@ -7,7 +7,7 @@
 
     <groupId>com.demo</groupId>
     <artifactId>hiring-app</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>hiring-app</name>
@@ -19,7 +19,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- 🔹 Build Plugins -->
     <build>
         <plugins>
 
@@ -30,14 +29,14 @@
                 <version>3.11.0</version>
             </plugin>
 
-            <!-- Maven Deploy Plugin -->
+            <!-- Deploy Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>3.1.2</version>
             </plugin>
 
-            <!-- Sonar Maven Plugin -->
+            <!-- Sonar Plugin -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
@@ -47,11 +46,11 @@
         </plugins>
     </build>
 
-    <!-- 🔹 Nexus Deployment Configuration -->
+    <!-- Nexus Deployment Configuration -->
     <distributionManagement>
         <repository>
             <id>deployment_app</id>
-            <version>1.0.0-SNAPSHOT</version>
+            <name>Nexus Snapshots</name>
             <url>http://localhost:8081/repository/deployment_app/</url>
         </repository>
     </distributionManagement>
